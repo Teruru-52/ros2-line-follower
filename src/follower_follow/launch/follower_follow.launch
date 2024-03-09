@@ -1,0 +1,5 @@
+<launch>
+  <include file="$(find-pkg-share micro_ros_agent)/launch/micro_ros_agent_launch.py">
+    </include>
+  <node pkg="follower_follow" exec="follower_follow_node" name="follower_follow_node" output="screen"/>
+</launch>
