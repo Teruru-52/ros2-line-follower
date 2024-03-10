@@ -1,7 +1,9 @@
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/float64.hpp>
+#include <follower_msgs/msg/input.hpp>
 
 using Float64 = std_msgs::msg::Float64;
+using Input = follower_msgs::msg::Input;
 // using std::placeholders::_1;
 
 class FollowerFollow : public rclcpp::Node
@@ -16,28 +18,28 @@ public:
 
         // subscriber
         rclcpp::QoS qos(rclcpp::KeepLast(10));
-        data_sub = this->create_subscription<Float64>(
-            "/sub_data", qos, [this](const Float64::SharedPtr msg)
-            { data = *msg; });
+        input_sub = this->create_subscription<Input>(
+            "/sub_input", qos, [this](const Input::SharedPtr msg)
+            { input = *msg; });
         // publisher
-        data_pub = this->create_publisher<Float64>("/pub_data", qos);
+        input_pub = this->create_publisher<Input>("/input", qos);
     }
 
 private:
     void TimerCallback()
     {
-        data_pub->publish(data);
+        input_pub->publish(input);
     }
 
     int loop_ms{1000};
-    Float64 data;
+    Input input;
 
     // timer
     rclcpp::TimerBase::SharedPtr timer;
     // subscriber
-    rclcpp::Subscription<Float64>::SharedPtr data_sub;
+    rclcpp::Subscription<Input>::SharedPtr input_sub;
     // publisher
-    rclcpp::Publisher<Float64>::SharedPtr data_pub;
+    rclcpp::Publisher<Input>::SharedPtr input_pub;
 };
 
 int main(int argc, char *argv[])

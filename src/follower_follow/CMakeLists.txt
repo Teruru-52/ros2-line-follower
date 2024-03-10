@@ -9,6 +9,7 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(follower_msgs REQUIRED)
 
 include_directories(
   include
@@ -26,6 +27,7 @@ target_include_directories(FOLLOWER_FOLLOW PUBLIC
 ament_target_dependencies(FOLLOWER_FOLLOW
   rclcpp
   std_msgs
+  follower_msgs
 )
 
 add_executable(follower_follow_node src/follower_follow_node.cpp)
